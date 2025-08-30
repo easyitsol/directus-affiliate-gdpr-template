@@ -1,0 +1,37 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Create .env.production for build
+        run: |
+          cat <<EOF > .env.production
+          NEXT_PUBLIC_DIRECTUS_URL=https://api.valista.de
+          DIRECTUS_PUBLIC_TOKEN=${{ secrets.DIRECTUS_PUBLIC_TOKEN }}
+          DIRECTUS_FORM_TOKEN=${{ secrets.DIRECTUS_FORM_TOKEN }}
+          NEXT_PUBLIC_SITE_URL=https://valista.de
+          DRAFT_MODE_SECRET=${{ secrets.DRAFT_MODE_SECRET }}
+          NEXT_PUBLIC_ENABLE_VISUAL_EDITING=true
+          NODE_ENV=production
+          EOF
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PWD }}" | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin
+
+      - name: Build Docker image
+        run:
+          rm -rf .next && docker build --secret id=env,src=.env.production -t ${{ secrets.DOCKER_USER
+          }}/colabido-website:latest .
+
+      - name: Push image to Docker Hub
+        run: docker push ${{ secrets.DOCKER_USER }}/colabido-website:latest
