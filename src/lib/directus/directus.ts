@@ -36,9 +36,7 @@ const directus = createDirectus<Schema>(directusUrl, {
 	globals: {
 		fetch: (...args) => queue.add(() => fetchRetry(0, ...args)),
 	},
-}).with(rest({
-	onRequest: (options) => ({ ...options, cache: 'no-store' }),
-}));
+}).with(rest());
 
 export const useDirectus = () => ({
 	directus: directus as RestClient<Schema>,
