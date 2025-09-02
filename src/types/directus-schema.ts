@@ -11,6 +11,29 @@ export interface ExtensionSeoMetadata {
 	no_follow?: boolean;
 }
 
+export interface ProductList {
+	id: string;
+	status: string;
+	category: string;
+	products?: Product[] | string[];
+}
+
+export interface Product {
+	id: string;
+	name: string;
+	description?: string;
+	image?: DirectusFile | string | null;
+	value: string;
+	price?: number;
+	productList: ProductList | string;
+	status: string;
+	date_created?: string | null;
+	date_updated?: string | null;
+	seo_meta: ExtensionSeoMetadata | null;
+	uvp?: number | null;
+	productLinks?: ProductLink[] | string[];
+}
+
 export interface AiPrompt {
 	/** @primaryKey */
 	id: string;
@@ -430,6 +453,7 @@ export interface Post {
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
+	Kategorie: string;
 }
 
 export interface Redirect {
@@ -762,6 +786,22 @@ export interface DirectusUser {
 	policies?: DirectusAccess[] | string[];
 }
 
+export interface Category {
+	id: string;
+	name: string;
+	slug: string;
+	thumbnail: DirectusFile | string | null;
+}
+
+export interface ProductLink {
+	id: string;
+	url: string;
+	price?: string;
+	product: Product | string;
+	date_created?: string | null;
+	date_updated?: string | null;
+}
+
 export interface DirectusWebhook {
 	/** @primaryKey */
 	id: number;
@@ -955,6 +995,10 @@ export interface Schema {
 	directus_translations: DirectusTranslation[];
 	directus_versions: DirectusVersion[];
 	directus_extensions: DirectusExtension[];
+	productLists: ProductList[];
+	categories: Category[];
+	products: Product[];
+	productLinks: ProductLink[];
 }
 
 export enum CollectionNames {
@@ -979,6 +1023,10 @@ export enum CollectionNames {
 	page_blocks = 'page_blocks',
 	pages = 'pages',
 	posts = 'posts',
+	categories = 'categories',
+	productLists = 'productLists',
+	products = 'products',
+	productLinks = 'productLinks',
 	redirects = 'redirects',
 	directus_access = 'directus_access',
 	directus_activity = 'directus_activity',

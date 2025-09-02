@@ -63,7 +63,7 @@ const Posts = ({ data }: PostsProps) => {
 
 					return;
 				}
-				const response = await fetchPaginatedPosts(perPage, currentPage);
+				const response = await fetchPaginatedPosts(perPage, currentPage) as Post[];
 				setPaginatedPosts(response);
 			} catch (error) {
 				console.error('Error fetching paginated posts:', error);

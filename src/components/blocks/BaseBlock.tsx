@@ -6,6 +6,7 @@ import Gallery from '@/components/blocks/Gallery';
 import Pricing from '@/components/blocks/Pricing';
 import Posts from '@/components/blocks/Posts';
 import Form from '@/components/blocks/Form';
+import CategoryGrid from './CategoryGrid';
 
 interface BaseBlockProps {
 	block: {
@@ -23,6 +24,7 @@ const BaseBlock = ({ block }: BaseBlockProps) => {
 		block_pricing: Pricing,
 		block_posts: Posts,
 		block_form: Form,
+		block_category_grid: CategoryGrid,
 	};
 
 	const Component = components[block.collection];

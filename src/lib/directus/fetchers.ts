@@ -1,7 +1,8 @@
-import { BlockPost, PageBlock, Post, Redirect, Schema } from '@/types/directus-schema';
+import { BlockPost, PageBlock, Post, Redirect, Schema, ProductList, Product, ProductLink } from '@/types/directus-schema';
 import { useDirectus } from './directus';
 import { readItems, aggregate, readItem, readSingleton, withToken, QueryFilter } from '@directus/sdk';
 import { RedirectError } from '../redirects';
+import { Category } from '../../types/directus-schema';
 
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
@@ -342,3 +343,146 @@ export async function fetchRedirects(): Promise<Pick<Redirect, 'url_from' | 'url
 
 	return response || [];
 }
+
+export const fetchProductLists = async (category: string): Promise<ProductList[]> => {
+	const { directus } = useDirectus();
+	try {
+		const response = await directus.request(
+			readItems('productLists', {
+				fields: ['id', 'status', 'category', {
+					products: ['id', 'name', 'description', 'price', 'image', 'value', {
+						productLinks: ['id', 'url', 'price', 'date_updated'],
+					}],
+				}],
+				filter: { category: {_eq: category} }
+			})
+		);
+
+		return response as ProductList[];
+	} catch (error) {
+		console.error('Error fetching productLists:', error);
+		throw new Error('Failed to fetch productLists');
+	}
+};
+
+/**
+ * Fetches all categories with name, slug, and thumbnail.
+ */
+export const fetchCategories = async (options?: { draft?: boolean; token?: string }): Promise<Category[]> => {
+	const { directus } = useDirectus();
+	const { draft, token } = options || {};
+	try {
+		if (draft && token) {
+			const response = await directus.request<Category[]>(
+				withToken(token,
+					readItems('categories', {
+						fields: ['name', 'slug', 'thumbnail'],
+					})
+				)
+			);
+
+			return response;
+		}
+
+		return await directus.request<Category[]>(
+			readItems('categories', {
+				fields: ['name', 'slug', 'thumbnail'],
+			})
+		);
+	} catch (error) {
+		console.error('Error fetching categories:', error);
+		throw new Error('Failed to fetch categories');
+	}
+};
+/**
+ * Fetches all posts assigned to a given category (by Kategorie field).
+ * @param {string} category - The category name to filter by (exact match).
+ */
+export const fetchPostsByCategory = async (category: string, options?: { draft?: boolean; token?: string },): Promise<Post[]> => {
+  const { directus } = useDirectus();
+	const { draft, token } = options || {};
+  try {
+		let postsByCat = readItems<Schema, 'posts', any>('posts', {
+			filter: { Kategorie: { _eq: category }, status: { _eq: 'published' } },
+			fields: [
+				'id',
+				'title',
+				'description',
+				'slug',
+				'image',
+				'Kategorie',
+				'published_at',
+				'author',
+			],
+			sort: ['-published_at'],
+		});
+		if (draft && token) {
+			postsByCat = withToken(token, postsByCat);
+		}
+
+    const response = await directus.request<Post []>(
+      postsByCat
+    );
+
+    return response;
+  } catch (error) {
+    console.error('Error fetching posts by category:', error);
+    throw new Error('Failed to fetch posts by category');
+  }
+};
+
+/**
+ * Fetches a single category by slug.
+ */
+export const fetchCategoryBySlug = async (
+  slug: string
+): Promise<any | null> => {
+  const { directus } = useDirectus();
+  try {
+    const response = await directus.request(
+      readItems('categories', {
+        filter: { slug: { _eq: slug } },
+        limit: 1,
+        fields: ['id', 'name', 'slug', 'thumbnail'],
+      })
+    );
+
+    return response.length > 0 ? response[0] : null;
+  } catch (error) {
+    console.error('Error fetching category by slug:', error);
+    throw new Error('Failed to fetch category by slug');
+  }
+};
+
+export const fetchProducts = async (productListId: string): Promise<Product[]> => {
+	const { directus } = useDirectus();
+	try {
+		const response = await directus.request(
+			readItems('products', {
+				filter: { productList: { _eq: productListId } }
+			})
+		);
+
+		return response as Product[];
+	} catch (error) {
+		console.error('Error fetching productLists:', error);
+		throw new Error('Failed to fetch productLists');
+	}
+};
+
+export const fetchProductLinks = async (productId: string): Promise<ProductLink[]> => {
+	const { directus } = useDirectus();
+	try {
+		const response = await directus.request(
+			readItems('productLinks', {
+				filter: { product: { _eq: productId } },
+				fields: ['*'], // TODO: Replace with specific fields for better performance
+			})
+		);
+
+		return response as ProductLink[];
+	} catch (error) {
+		console.error('Error fetching productLists:', error);
+		throw new Error('Failed to fetch productLists');
+	}
+};
