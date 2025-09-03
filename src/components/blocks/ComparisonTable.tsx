@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { fetchProductLists, fetchCategories } from '@/lib/directus/fetchers';
 import type { ProductList, Product, Category, ProductLink } from '@/types/directus-schema';
-import { fa } from 'zod/v4/locales';
 import Tagline from '../ui/Tagline';
 import Headline from '../ui/Headline';
 import { setAttr } from '@directus/visual-editing';
-import { set } from 'zod';
 
 export interface ComparisonTableData {
 	id: string;
