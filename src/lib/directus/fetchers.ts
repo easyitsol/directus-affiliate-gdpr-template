@@ -113,6 +113,17 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 											],
 										},
 									],
+									block_category_grid: [
+										'id',
+										'tagline',
+										'headline',
+									],
+									block_comparison_table: [
+										'id',
+										'tagline',
+										'headline',
+										'items',
+									],
 								},
 							},
 						],

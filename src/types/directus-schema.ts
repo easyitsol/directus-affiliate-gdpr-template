@@ -171,6 +171,30 @@ export interface BlockPost {
 	user_updated?: DirectusUser | string | null;
 }
 
+export interface BlockPriceComparisonTable {
+	/** @primaryKey */
+	id: string;
+	/** @description Larger main headline for this page section. */
+	headline?: string | null;
+	/** @description Smaller copy shown above the headline to label a section or add extra context. */
+	tagline?: string | null;
+	date_created?: string | null;
+	date_updated?: string | null;
+	/** @description The individual pricing rows to display. */
+	items?: ProductList[] | string[];
+}
+
+export interface BlockCategoryGrid {
+	/** @primaryKey */
+	id: string;
+	/** @description Larger main headline for this page section. */
+	headline?: string | null;
+	/** @description Smaller copy shown above the headline to label a section or add extra context. */
+	tagline?: string | null;
+	date_created?: string | null;
+	date_updated?: string | null;
+}
+
 export interface BlockPricing {
 	/** @primaryKey */
 	id: string;
@@ -394,7 +418,7 @@ export interface PageBlock {
 	/** @description The id of the page that this block belongs to. */
 	page?: Page | string | null;
 	/** @description The data for the block. */
-	item?: BlockHero | BlockRichtext | BlockForm | BlockPost | BlockGallery | BlockPricing | string | null;
+	item?: BlockHero | BlockRichtext | BlockForm | BlockPost | BlockGallery | BlockPricing | BlockCategoryGrid | BlockPriceComparisonTable | string | null;
 	/** @description The collection (type of block). */
 	collection?: string | null;
 	/** @description Temporarily hide this block on the website without having to remove it from your page. */
@@ -957,6 +981,8 @@ export interface Schema {
 	block_pricing: BlockPricing[];
 	block_pricing_cards: BlockPricingCard[];
 	block_richtext: BlockRichtext[];
+	block_category_grid: BlockCategoryGrid[];
+	block_comparison_table: BlockPriceComparisonTable[];
 	form_fields: FormField[];
 	forms: Form[];
 	form_submissions: FormSubmission[];
