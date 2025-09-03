@@ -476,8 +476,8 @@ export const fetchProducts = async (productListId: string): Promise<Product[]> =
 
 		return response as Product[];
 	} catch (error) {
-		console.error('Error fetching productLists:', error);
-		throw new Error('Failed to fetch productLists');
+		console.error('Error fetching products:', error);
+		throw new Error('Failed to fetch products');
 	}
 };
 

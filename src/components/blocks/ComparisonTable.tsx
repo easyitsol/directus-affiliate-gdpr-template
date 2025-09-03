@@ -59,7 +59,7 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
         setLoadingProducts(true);
         setError(null);
         try {
-          const lists = await fetchProductLists(selectedCategory.slug);
+          const lists = await fetchProductLists(selectedCategory.id);
           setProductLists(lists);
         } catch (err: any) {
           setError(err.message || 'Fehler beim Laden der Produktlisten.');
