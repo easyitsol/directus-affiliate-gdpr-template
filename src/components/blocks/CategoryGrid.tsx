@@ -4,6 +4,9 @@ import DirectusImage from '@/components/shared/DirectusImage';
 import { cn } from '@/lib/utils';
 
 import Link from 'next/link';
+import Headline from '../ui/Headline';
+import Tagline from '../ui/Tagline';
+import { setAttr } from '@directus/visual-editing';
 
 interface Category {
   name: string;
@@ -11,7 +14,18 @@ interface Category {
   thumbnail: string | null;
 }
 
-export default function CategoryGrid() {
+export interface CategoryGridData {
+	id: string;
+	tagline?: string;
+	headline?: string;
+}
+
+interface CategoryGridProps {
+	data: CategoryGridData;
+}
+
+export default function CategoryGrid({data}: CategoryGridProps) {
+  const { tagline, headline, id } = data;
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
@@ -34,6 +48,28 @@ export default function CategoryGrid() {
 
   return (
     <section className="w-full mx-auto flex flex-col gap-8">
+      {tagline && (
+				<Tagline
+					tagline={tagline}
+					data-directus={setAttr({
+						collection: 'block_comparison_table',
+						item: id,
+						fields: 'tagline',
+						mode: 'popover',
+					})}
+				/>
+			)}
+			{headline && (
+				<Headline
+					headline={headline}
+					data-directus={setAttr({
+						collection: 'block_comparison_table',
+						item: id,
+						fields: 'headline',
+						mode: 'popover',
+					})}
+				/>
+			)}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
         {categories.map((cat) => (
           <Link

@@ -7,6 +7,7 @@ import Pricing from '@/components/blocks/Pricing';
 import Posts from '@/components/blocks/Posts';
 import Form from '@/components/blocks/Form';
 import CategoryGrid from './CategoryGrid';
+import ComparisonTable from './ComparisonTable';
 
 interface BaseBlockProps {
 	block: {
@@ -25,6 +26,7 @@ const BaseBlock = ({ block }: BaseBlockProps) => {
 		block_posts: Posts,
 		block_form: Form,
 		block_category_grid: CategoryGrid,
+		block_comparison_table: ComparisonTable,
 	};
 
 	const Component = components[block.collection];
