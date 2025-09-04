@@ -194,7 +194,7 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
                               <a
                                 href={link.url}
                                 target="_blank"
-                                rel="sponsored nofollow noopener"
+                                rel="sponsored nofollow noopener noreferrer"
                                 className= "underline"
                               >
                                 {link.price ? `${link.price} €` : 'Zum Shop'}
