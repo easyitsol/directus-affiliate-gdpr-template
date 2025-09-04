@@ -96,7 +96,7 @@ export default function CategoryGrid({data}: CategoryGridProps) {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent z-10" />
               <div className="relative z-20 w-full flex justify-center">
                 <span className="px-4 py-2 bg-black/60 rounded-lg text-white text-lg font-semibold backdrop-blur-sm transition-colors duration-300 group-hover:bg-black/80">
-                   <Link href={`/category/${cat.slug}`}>{cat.name}</Link>
+                   <span>{cat.name}</span>
                 </span>
               </div>
             </div>

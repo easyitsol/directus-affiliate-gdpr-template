@@ -129,10 +129,10 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
             <Button
               id={`cat-${cat.id}`}
               label={cat.name}
-              key={cat.id}
-              variant={selectedCategory?.id === cat.id ? 'primary' : 'outline'}
+              key={cat.name}
+              variant={selectedCategory?.name === cat.name ? 'default' : 'outline'}
               onClick={() => setSelectedCategory(cat)}
-              disabled={loadingProducts && selectedCategory?.id === cat.id}
+              disabled={loadingProducts && selectedCategory?.name === cat.name}
             />
           ))}
         </div>
