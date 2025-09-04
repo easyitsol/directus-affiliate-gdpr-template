@@ -3,6 +3,7 @@ import { fetchProductLists, fetchCategories } from '@/lib/directus/fetchers';
 import type { ProductList, Product, Category, ProductLink } from '@/types/directus-schema';
 import Tagline from '../ui/Tagline';
 import Headline from '../ui/Headline';
+import Button from './Button';
 import { setAttr } from '@directus/visual-editing';
 
 export interface ComparisonTableData {
@@ -99,7 +100,7 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
   }
 
   return (
-    <section className="w-full max-w-5xl mx-auto px-4 py-12 md:py-20">
+    <section className="w-full max-w-5xl px-4 py-12 md:py-20">
       {tagline && (
 				<Tagline
 					tagline={tagline}
@@ -123,20 +124,16 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
 				/>
 			)}
       {!items && categories && categories.length > 0 &&
-        <div className="flex flex-wrap gap-2 justify-center mb-8">
+        <div className="flex flex-wrap gap-2 my-8">
           {categories.map((cat) => (
-            <button
+            <Button
+              id={`cat-${cat.id}`}
+              label={cat.name}
               key={cat.id}
-              className={`px-4 py-2 rounded ${
-                selectedCategory?.id === cat.id
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-200 text-gray-800'
-              } transition`}
+              variant={selectedCategory?.id === cat.id ? 'primary' : 'outline'}
               onClick={() => setSelectedCategory(cat)}
               disabled={loadingProducts && selectedCategory?.id === cat.id}
-            >
-              {cat.name}
-            </button>
+            />
           ))}
         </div>
       }
@@ -153,9 +150,9 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
                 <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Name</th>
                 <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Beschreibung</th>
                 <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Bild</th>
-                <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Wert</th>
+                <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Vorteil</th>
                 <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Preis</th>
-                <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Links</th>
+                <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Affiliate-Links</th>
               </tr>
             </thead>
             <tbody>
@@ -197,8 +194,8 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
                               <a
                                 href={link.url}
                                 target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 underline"
+                                rel="sponsored nofollow noopener"
+                                className= "underline"
                               >
                                 {link.price ? `${link.price} €` : 'Zum Shop'}
                               </a>
