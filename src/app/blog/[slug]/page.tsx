@@ -42,6 +42,6 @@ export default async function BlogPostPage({
 	} catch (error) {
 		console.error('Error loading blog post:', error);
 
-		return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
+		return <div className="text-center text-xl mt-[20%]">404 - Beitrag nicht gefunden</div>;
 	}
 }

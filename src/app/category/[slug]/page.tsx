@@ -20,7 +20,7 @@ export default async function CategoryPage({
 		const posts: Post[] = await fetchPostsByCategory(category.id.toString(), { draft: isDraft, token: token });
 
 		if (!category) {
-			return <div className="text-center text-xl mt-[20%]">404 - Category Not Found</div>;
+			return <div className="text-center text-xl mt-[20%]">404 - Kategorie nicht gefunden</div>;
 		}
 
 		const thumbnailId =
