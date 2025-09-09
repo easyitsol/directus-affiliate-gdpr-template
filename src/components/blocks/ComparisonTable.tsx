@@ -321,6 +321,7 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
           </table>
         )}
       </div>
+      <p className="text-xs text-gray-500 mt-4">** Affiliate-Link: Wenn du über diesen Link kaufst, erhalten wir eine kleine Provision ohne zusätzliche Kosten für dich. Vielen Dank für deine Unterstützung!</p>
     </section>
   );
 };
