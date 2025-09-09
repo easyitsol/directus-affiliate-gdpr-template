@@ -243,11 +243,11 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
           <table className="min-w-full ring-offset-background border border-gray-200 rounded-lg shadow">
             <thead>
               <tr>
-                <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Name</th>
-                <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Beschreibung</th>
-                <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Bild</th>
-                <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Stärken</th>
-                <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Affiliate-Links</th>
+                <th className="px-6 py-3 border-b text-left font-semibold text-gray-500">Name</th>
+                <th className="px-6 py-3 border-b text-left font-semibold text-gray-500">Beschreibung</th>
+                <th className="px-6 py-3 border-b text-left font-semibold text-gray-500">Bild</th>
+                <th className="px-6 py-3 border-b text-left font-semibold text-gray-500">Stärken</th>
+                <th className="px-6 py-3 border-b text-left font-semibold text-gray-500">Affiliate-Links</th>
               </tr>
             </thead>
             <tbody>
