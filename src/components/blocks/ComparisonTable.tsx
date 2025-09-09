@@ -252,7 +252,7 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
             </thead>
             <tbody>
               {products.map((product) => (
-                <tr key={product.id} className="hover:bg-gray-50">
+                <tr key={product.id} className="hover:bg-gray-400">
                   <td className="px-6 py-4 border-b">{product.name}</td>
                   <td className="px-6 py-4 border-b">{product.description ? product.description?.substring(0, 100) + '...' : '—'}</td>
                   <td className="px-6 py-4 border-b">
