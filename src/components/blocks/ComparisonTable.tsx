@@ -5,6 +5,8 @@ import Tagline from '../ui/Tagline';
 import Headline from '../ui/Headline';
 import Button from './Button';
 import { setAttr } from '@directus/visual-editing';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export interface ComparisonTableData {
 	id: string;
@@ -138,7 +140,101 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
         </div>
       }
       {/* Table */}
-      <div className="overflow-x-auto">
+      {/* Mobile Card View */}
+      <div className="block md:hidden">
+        {loadingProducts ? (
+          <div className="text-center py-8">Lade Produkte...</div>
+        ) : !latestProductList || products.length === 0 ? (
+          <div className="text-center py-8">Keine Produkte gefunden.</div>
+        ) : (
+          <div className="space-y-6">
+            {products.map((product) => (
+              <div
+                key={product.id}
+                className="bg-white border border-gray-200 rounded-lg shadow p-4 flex flex-col gap-3"
+              >
+                <div className="flex items-center gap-3">
+                  {product.image ? (
+                    typeof product.image === 'string' ? (
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        className="size-16 object-cover rounded"
+                        width={64}
+                        height={64}
+                      />
+                    ) : product.image?.id ? (
+                      <Image
+                        src={`/assets/${product.image.id}`}
+                        alt={product.name}
+                        className="size-16 object-cover rounded"
+                        width={64}
+                        height={64}
+                      />
+                    ) : (
+                      <span className="size-16 flex items-center justify-center bg-gray-100 rounded text-gray-400">—</span>
+                    )
+                  ) : (
+                    <span className="size-16 flex items-center justify-center bg-gray-100 rounded text-gray-400">—</span>
+                  )}
+                  <div>
+                    <h3 className="text-lg font-semibold">{product.name}</h3>
+                    <div className="text-sm text-gray-500">{product.value || '—'}</div>
+                  </div>
+                </div>
+                <div>
+                  <div className="font-medium text-gray-700 mb-1">Beschreibung</div>
+                  <div className="text-gray-600 text-sm">
+                    {product.description ? product.description.substring(0, 200) + (product.description.length > 200 ? '...' : '') : '—'}
+                  </div>
+                </div>
+                <div>
+                  <div className="font-medium text-gray-700 mb-1">Stärken</div>
+                  <div className="text-gray-600 text-sm">{product.value || '—'}</div>
+                </div>
+                <div>
+                  <div className="font-medium text-gray-700 mb-1">Affiliate-Links</div>
+                  {Array.isArray(product.productLinks) && product.productLinks.length > 0 ? (
+                    <ul className="space-y-1">
+                      {(product.productLinks as ProductLink[]).map((link) =>
+                        typeof link === 'object' && link.url ? (
+                          <li key={link.id}>
+                            <Link
+                              href={link.url}
+                              target="_blank"
+                              rel="sponsored nofollow noopener noreferrer"
+                              className="underline"
+                            >
+                              {link.price ? `${link.price} € bei ` : ''}
+                              {link.shop ? `${link.shop}` : 'Zum Shop'}
+                              **
+                            </Link>
+                          </li>
+                        ) : null
+                      )}
+                    </ul>
+                  ) : (
+                    <span>
+                      <Link
+                        href={product.deeplink || '#'}
+                        target="_blank"
+                        rel="sponsored nofollow noopener noreferrer"
+                        className="underline"
+                      >
+                        {product.price ? `${product.price} € bei ` : ''}
+                        {product.shop ? `${product.shop}` : 'Zum Shop'}
+                        **
+                      </Link>
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      {/* Desktop Table View */}
+      <div className="hidden md:block overflow-x-auto">
         {loadingProducts ? (
           <div className="text-center py-8">Lade Produkte...</div>
         ) : !latestProductList || products.length === 0 ? (
@@ -150,8 +246,7 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
                 <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Name</th>
                 <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Beschreibung</th>
                 <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Bild</th>
-                <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Vorteil</th>
-                <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Preis</th>
+                <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Stärken</th>
                 <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Affiliate-Links</th>
               </tr>
             </thead>
@@ -159,20 +254,24 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
               {products.map((product) => (
                 <tr key={product.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 border-b">{product.name}</td>
-                  <td className="px-6 py-4 border-b">{product.description || '—'}</td>
+                  <td className="px-6 py-4 border-b">{product.description ? product.description?.substring(0, 100) + '...' : '—'}</td>
                   <td className="px-6 py-4 border-b">
                     {product.image ? (
                       typeof product.image === 'string' ? (
-                        <img
+                        <Image
                           src={product.image}
                           alt={product.name}
                           className="size-12 object-cover rounded"
+                          width={64}
+                          height={64}
                         />
                       ) : product.image?.id ? (
-                        <img
+                        <Image
                           src={`/assets/${product.image.id}`}
                           alt={product.name}
                           className="size-12 object-cover rounded"
+                          width={64}
+                          height={64}
                         />
                       ) : (
                         <span>—</span>
@@ -183,15 +282,12 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
                   </td>
                   <td className="px-6 py-4 border-b">{product.value || '—'}</td>
                   <td className="px-6 py-4 border-b">
-                    {typeof product.price === 'number' ? `${product.price} €` : '—'}
-                  </td>
-                  <td className="px-6 py-4 border-b">
                     {Array.isArray(product.productLinks) && product.productLinks.length > 0 ? (
                       <ul className="space-y-1">
                         {(product.productLinks as ProductLink[]).map((link) =>
                           typeof link === 'object' && link.url ? (
                             <li key={link.id}>
-                              <a
+                              <Link
                                 href={link.url}
                                 target="_blank"
                                 rel="sponsored nofollow noopener noreferrer"
@@ -199,14 +295,15 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
                               >
                                  {link.price ? `${link.price} € bei ` : ''}
                                 {link.shop ? `${link.shop}` : 'Zum Shop'}
-                              </a>
+                                **
+                              </Link>
                             </li>
                           ) : null
                         )}
                       </ul>
                     ) : (
                       <span>
-                      <a
+                      <Link
                         href={product.deeplink || '#'}
                         target="_blank"
                         rel="sponsored nofollow noopener noreferrer"
@@ -214,7 +311,8 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
                       >
                         {product.price ? `${product.price} € bei ` : ''}
                         {product.shop ? `${product.shop}` : 'Zum Shop'}
-                      </a></span>
+                        **
+                      </Link></span>
                     )}
                   </td>
                 </tr>

@@ -402,7 +402,7 @@ export const fetchCategories = async (options?: { draft?: boolean; token?: strin
 			const response = await directus.request<Category[]>(
 				withToken(token,
 					readItems('categories', {
-						fields: ['name', 'slug', 'thumbnail'],
+						fields: ['id','name', 'slug', 'thumbnail'],
 					})
 				)
 			);
@@ -412,7 +412,7 @@ export const fetchCategories = async (options?: { draft?: boolean; token?: strin
 
 		return await directus.request<Category[]>(
 			readItems('categories', {
-				fields: ['name', 'slug', 'thumbnail'],
+				fields: ['id','name', 'slug', 'thumbnail'],
 			})
 		);
 	} catch (error) {

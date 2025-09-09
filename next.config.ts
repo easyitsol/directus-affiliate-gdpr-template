@@ -37,7 +37,11 @@ const nextConfig: NextConfig = {
 				hostname: 'localhost',
 				port: '8055',
 				pathname: '/assets/**',
-			},
+			}, {
+				protocol: 'https',
+				hostname: 'images2.productserve.com',
+				pathname: '/**',
+			}
 		],
 	},
 	env: {
