@@ -240,7 +240,7 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
         ) : !latestProductList || products.length === 0 ? (
           <div className="text-center py-8">Keine Produkte gefunden.</div>
         ) : (
-          <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow">
+          <table className="min-w-full ring-offset-background border border-gray-200 rounded-lg shadow">
             <thead>
               <tr>
                 <th className="px-6 py-3 border-b text-left font-semibold text-gray-700">Name</th>
