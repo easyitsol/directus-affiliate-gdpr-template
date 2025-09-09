@@ -361,7 +361,7 @@ export const fetchProductLists = async (category: string): Promise<ProductList[]
 		const response = await directus.request(
 			readItems('productLists', {
 				fields: ['id', 'status', 'category', {
-					products: ['id', 'name', 'description', 'price', 'image', 'value', {
+					products: ['id', 'name', 'description', 'price', 'image', 'deeplink', 'value', {
 						productLinks: ['id', 'url', 'price', 'date_updated'],
 					}],
 				}],
@@ -414,7 +414,7 @@ export const fetchPostsByCategory = async (category: string, options?: { draft?:
 	const { draft, token } = options || {};
   try {
 		let postsByCat = readItems<Schema, 'posts', any>('posts', {
-			filter: { Kategorie: { _eq: category }, status: { _eq: 'published' } },
+			filter: { Kategorie: { _eq: parseInt(category) }, status: { _eq: 'published' } },
 			fields: [
 				'id',
 				'title',

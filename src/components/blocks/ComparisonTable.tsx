@@ -197,14 +197,24 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
                                 rel="sponsored nofollow noopener noreferrer"
                                 className= "underline"
                               >
-                                {link.price ? `${link.price} €` : 'Zum Shop'}
+                                 {link.price ? `${link.price} € bei ` : ''}
+                                {link.shop ? `${link.shop}` : 'Zum Shop'}
                               </a>
                             </li>
                           ) : null
                         )}
                       </ul>
                     ) : (
-                      <span>—</span>
+                      <span>
+                      <a
+                        href={product.deeplink || '#'}
+                        target="_blank"
+                        rel="sponsored nofollow noopener noreferrer"
+                        className= "underline"
+                      >
+                        {product.price ? `${product.price} € bei ` : ''}
+                        {product.shop ? `${product.shop}` : 'Zum Shop'}
+                      </a></span>
                     )}
                   </td>
                 </tr>

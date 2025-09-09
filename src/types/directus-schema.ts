@@ -23,7 +23,7 @@ export interface Product {
 	name: string;
 	description?: string;
 	image?: DirectusFile | string | null;
-	value: string;
+	value?: string;
 	price?: number;
 	productList: ProductList | string;
 	status: string;
@@ -31,6 +31,8 @@ export interface Product {
 	date_updated?: string | null;
 	seo_meta: ExtensionSeoMetadata | null;
 	uvp?: number | null;
+	deeplink?: string | null;
+	shop?: string | null;
 	productLinks?: ProductLink[] | string[];
 }
 
@@ -821,6 +823,7 @@ export interface ProductLink {
 	id: string;
 	url: string;
 	price?: string;
+	shop?: string | null;
 	product: Product | string;
 	date_created?: string | null;
 	date_updated?: string | null;
