@@ -360,16 +360,31 @@ export const fetchProductLists = async (category: string): Promise<ProductList[]
 	try {
 		const response = await directus.request(
 			readItems('productLists', {
-				fields: ['id', 'status', 'category', {
+				fields: ['id', 'status', 'category' /**{
 					products: ['id', 'name', 'description', 'price', 'image', 'deeplink', 'value', {
 						productLinks: ['id', 'url', 'price', 'date_updated'],
 					}],
-				}],
+				}*/],
 				filter: { category: {_eq: category} }
 			})
 		);
 
-		return response as ProductList[];
+		const productList = response as ProductList[];
+		
+		const publishedProductLists = productList.filter(pl => pl.status === 'published');
+		const updatedProductLists = await Promise.all(
+			publishedProductLists.map(async pl => {
+				const products = await directus.request(
+					readItems('products', {
+						filter: { productList: { _eq: pl.id } },
+					}),
+				);
+				
+				return { ...pl, products };
+			}),
+		);
+		
+		return updatedProductLists as ProductList[];
 	} catch (error) {
 		console.error('Error fetching productLists:', error);
 		throw new Error('Failed to fetch productLists');
