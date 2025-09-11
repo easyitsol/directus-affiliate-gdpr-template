@@ -479,7 +479,8 @@ export interface Post {
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
-	Kategorie: string;
+	Kategorie?: string;
+	productList?: ProductList | null;
 }
 
 export interface Redirect {

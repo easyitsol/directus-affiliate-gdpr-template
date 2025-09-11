@@ -74,14 +74,16 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
       fetchProducts();
     }, [selectedCategory]);
   } else {
-    setProductLists(items);
+    useEffect(() => {
+      setProductLists(items);
+    }, [items]);
   }
 
   // Find the latest product list (by id or date, fallback to last)
   const latestProductList: ProductList | null =
     productLists && productLists.length > 0
       ? productLists[productLists.length - 1]
-      : null;
+      : items && items.length > 0 ? items[items.length - 1] : null;
 
   // Helper to get products array
   const products: Product[] =

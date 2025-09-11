@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { setAttr } from '@directus/visual-editing';
 import { useVisualEditing } from '@/hooks/useVisualEditing';
@@ -12,6 +12,7 @@ import Link from 'next/link';
 import Headline from '@/components/ui/Headline';
 import Container from '@/components/ui/container';
 import { Post, DirectusUser } from '@/types/directus-schema';
+import ComparisonTable from '@/components/blocks/ComparisonTable';
 
 interface BlogPostClientProps {
 	post: Post;
@@ -32,16 +33,6 @@ export default function BlogPostClient({
 }: BlogPostClientProps) {
 	const { isVisualEditingEnabled, apply } = useVisualEditing();
 	const router = useRouter();
-
-	useEffect(() => {
-		if (isVisualEditingEnabled) {
-			apply({
-				onSaved: () => {
-					router.refresh();
-				},
-			});
-		}
-	}, [isVisualEditingEnabled, apply, router]);
 
 	return (
 		<>
@@ -93,6 +84,17 @@ export default function BlogPostClient({
 								mode: 'drawer',
 							})}
 						/>
+						{/* Comparison Table below article */}
+						{post.productList && (
+							<div className="mt-12">
+									<ComparisonTable
+										data={{
+											id: post.productList.id,
+											items: [post.productList],
+										}}
+									/>
+							</div>
+						)}
 					</main>
 
 					<aside className="space-y-6 p-6 rounded-lg max-w-[496px] h-fit bg-background-muted">

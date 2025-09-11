@@ -257,6 +257,14 @@ export const fetchPostBySlug = async (
 				'description',
 				'slug',
 				'seo',
+				'Kategorie',
+				{
+					productList: ['id', 'status', 'category', {
+						products: ['id', 'name', 'description', 'price', 'image', 'deeplink', 'value', {
+							productLinks: ['id', 'url', 'price', 'date_updated'],
+						}],
+					}]
+				},
 				{
 					author: ['id', 'first_name', 'last_name', 'avatar'],
 				},
@@ -281,6 +289,12 @@ export const fetchPostBySlug = async (
 		]);
 
 		const post: Post | null = posts.length > 0 ? (posts[0] as Post) : null;
+		if (post?.productList) {
+			const products = await directus.request(readItems('products', {
+				filter: { productList: { _eq: post.productList.id } },
+			}));
+			post.productList.products = products;
+		}
 
 		return { post, relatedPosts };
 	} catch (error) {
