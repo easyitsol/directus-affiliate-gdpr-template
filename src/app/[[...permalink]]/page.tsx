@@ -22,6 +22,10 @@ export async function generateMetadata({ params }: { params: Promise<{ permalink
 				url: `${process.env.NEXT_PUBLIC_SITE_URL}${resolvedPermalink}`,
 				type: 'website',
 			},
+			robots: {
+				index:  !page.seo?.no_index,
+				follow: !page.seo?.no_follow
+			}
 		};
 	} catch (error) {
 		console.error('Error loading page metadata:', error);
