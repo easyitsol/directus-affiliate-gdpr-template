@@ -370,6 +370,8 @@ export interface Globals {
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
+	cookiebot_id?: string | null;
+	matomo_id?: string | null;
 }
 
 export interface Navigation {
