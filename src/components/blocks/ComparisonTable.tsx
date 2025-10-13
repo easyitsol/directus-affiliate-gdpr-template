@@ -153,7 +153,7 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
             {products.map((product) => (
               <div
                 key={product.id}
-                className="bg-white border border-gray-200 rounded-lg shadow p-4 flex flex-col gap-3"
+                className="bg-grey border border-gray-200 rounded-lg shadow p-4 flex flex-col gap-3"
               >
                 <div className="flex items-center gap-3">
                   {product.image ? (
@@ -181,7 +181,7 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
                   )}
                   <div>
                     <h3 className="text-lg font-semibold">{product.name}</h3>
-                    <div className="text-sm text-gray-500">{product.value || '—'}</div>
+                    <div className="text-sm text-gray-500">{product.value || ''}</div>
                   </div>
                 </div>
                 <div>
@@ -190,12 +190,11 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
                     {product.description ? product.description.substring(0, 200) + (product.description.length > 200 ? '...' : '') : '—'}
                   </div>
                 </div>
-                <div>
+                {/**<div>
                   <div className="font-medium text-gray-700 mb-1">Stärken</div>
                   <div className="text-gray-600 text-sm">{product.value || '—'}</div>
-                </div>
+                </div> */}
                 <div>
-                  <div className="font-medium text-gray-700 mb-1">Affiliate-Links</div>
                   {Array.isArray(product.productLinks) && product.productLinks.length > 0 ? (
                     <ul className="space-y-1">
                       {(product.productLinks as ProductLink[]).map((link) =>
@@ -248,7 +247,7 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
                 <th className="px-6 py-3 border-b text-left font-semibold text-gray-500">Name</th>
                 <th className="px-6 py-3 border-b text-left font-semibold text-gray-500">Beschreibung</th>
                 <th className="px-6 py-3 border-b text-left font-semibold text-gray-500">Bild</th>
-                <th className="px-6 py-3 border-b text-left font-semibold text-gray-500">Stärken</th>
+                {/**<th className="px-6 py-3 border-b text-left font-semibold text-gray-500">Stärken</th> */}
                 <th className="px-6 py-3 border-b text-left font-semibold text-gray-500">Affiliate-Links</th>
               </tr>
             </thead>
@@ -263,17 +262,17 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
                         <Image
                           src={product.image}
                           alt={product.name}
-                          className="size-12 object-cover rounded"
-                          width={64}
-                          height={64}
+                          className="object-cover rounded"
+                          width={96}
+                          height={96}
                         />
                       ) : product.image?.id ? (
                         <Image
                           src={`/assets/${product.image.id}`}
                           alt={product.name}
-                          className="size-12 object-cover rounded"
-                          width={64}
-                          height={64}
+                          className="object-cover rounded"
+                          width={96}
+                          height={96}
                         />
                       ) : (
                         <span>—</span>
@@ -282,7 +281,7 @@ const ComparisonTable = ({data}: ComparisonTableProps) => {
                       <span>—</span>
                     )}
                   </td>
-                  <td className="px-6 py-4 border-b">{product.value || '—'}</td>
+                  {/** <td className="px-6 py-4 border-b">{product.value || '—'}</td> */}
                   <td className="px-6 py-4 border-b">
                     {Array.isArray(product.productLinks) && product.productLinks.length > 0 ? (
                       <ul className="space-y-1">
