@@ -54,3 +54,7 @@
 		@apply hover:text-accent transition-colors no-underline;
 	}
 }
+
+body h4 {
+	font-size: 24px;
+}
