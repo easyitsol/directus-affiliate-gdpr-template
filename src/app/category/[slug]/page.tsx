@@ -29,7 +29,7 @@ export default async function CategoryPage({
 				: category.thumbnail?.id;
 
 		return (
-			<div>
+			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-16'>
 				{/* Category Hero Section */}
 				<div className="relative w-full h-64 md:h-80 flex items-end justify-start mb-8">
 					{thumbnailId && (
@@ -37,12 +37,12 @@ export default async function CategoryPage({
 							uuid={thumbnailId}
 							alt={category.name}
 							fill
-							className="absolute inset-0 size-full object-cover z-0"
+							className="absolute inset-0 size-full object-cover rounded-lg z-0"
 							sizes="100vw"
 							priority
 						/>
 					)}
-					<div className="absolute inset-0 bg-black/50 z-10" />
+					<div className="absolute inset-0 z-10" />
 					<div className="relative z-20 p-6 md:p-10">
 						<h1 className="text-3xl md:text-5xl font-bold text-white drop-shadow-lg bg-black/60 rounded px-4 py-2 inline-block">
 							{category.name}
