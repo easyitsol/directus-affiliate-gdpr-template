@@ -125,7 +125,7 @@ const Posts = ({ data }: PostsProps) => {
 			)}
 
 			<div
-				className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+				className="my-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
 				data-directus={setAttr({
 					collection: 'block_posts',
 					item: id,
@@ -159,7 +159,7 @@ const Posts = ({ data }: PostsProps) => {
 					<p className="text-center text-gray-500">No posts available.</p>
 				)}
 			</div>
-
+			
 			{totalPages > 1 && (
 				<Pagination>
 					<PaginationContent>

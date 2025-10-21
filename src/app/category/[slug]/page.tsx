@@ -29,9 +29,9 @@ export default async function CategoryPage({
 				: category.thumbnail?.id;
 
 		return (
-			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-16'>
+			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 mb-8'>
 				{/* Category Hero Section */}
-				<div className="relative w-full h-64 md:h-80 flex items-end justify-start mb-8">
+				<div className="relative w-full h-64 md:h-80 flex items-end justify-start mb-32">
 					{thumbnailId && (
 						<DirectusImage
 							uuid={thumbnailId}
