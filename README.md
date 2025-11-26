@@ -143,33 +143,45 @@ Updated structure highlights **Analytics** and **Affiliate Components**:
 
 ```text
 src/
-├── app/                      # Next.js App Router
-│   ├── blog/                 # Content Marketing routes
-│   ├── reviews/              # Product Review routes (Affiliate specific)
-│   │   ├── [slug]/
+├── app/                              # Next.js App Router and APIs
+│   ├── blog/                         # Blog-related routes
+│   │   ├── [slug]/                   # Dynamic blog post route
 │   │   │   └── page.tsx
-│   ├── api/                  
-│   │   ├── draft/            # Live preview logic
-│   │   └── route.ts
-│   ├── layout.tsx            # Main layout (injects Analytics/CMP here)
-├── components/
-│   ├── analytics/            # Tracking & Compliance
-│   │   ├── MatomoScript.tsx  # Matomo initialization
-│   │   └── CmpLoader.tsx     # Cookie Banner loader
-│   ├── affiliate/            # Affiliate Specific UI
-│   │   ├── ComparisonTable.tsx
-│   │   ├── ProsConsList.tsx
-│   │   ├── ProductCard.tsx
-│   │   └── StickyCta.tsx
-│   ├── blocks/               # Standard CMS blocks (Hero, Text, etc.)
-│   ├── forms/                # Form components
-│   ├── layout/               # Header, Footer, PageBuilder
-│   └── ui/                   # Shadcn base components
-├── lib/
-│   ├── directus/             # API client & fetchers
-│   ├── tracking/             # Tracking utilities
-│   │   └── events.ts         # Custom event helper (e.g., trackAffiliateClick)
-│   └── utils.ts
-├── styles/                   # Global styles
-└── types/                    # TypeScript types
+│   ├── [permalink]/                  # Dynamic page route
+│   │   └── page.tsx
+│   ├── api/                          # API routes for draft/live preview and search
+│   │   ├── draft/                    # Routes for draft previews
+│   │   │   └── route.ts
+│   │   ├── search/                   # Routes for search functionality
+│   │   │   └── route.ts
+│   ├── layout.tsx                    # Shared layout for all routes
+├── components/                       # Reusable components
+│   ├── blocks/                       # CMS blocks (Hero, Gallery, etc.)
+│   │   └── ...
+│   ├── forms/                        # Form components
+│   │   ├── DynamicForm.tsx           # Renders dynamic forms with validation
+│   │   ├── FormBuilder.tsx           # Manages form lifecycles and submission
+│   │   ├── FormField.tsx             # Renders individual form fields dynamically
+│   │   └── fields/                   # Form fields components
+│   │   └── ...
+│   ├── layout/                       # Layout components
+│   │   ├── Footer.tsx
+│   │   ├── NavigationBar.tsx
+│   │   └── PageBuilder.tsx           # Assembles blocks into pages
+│   ├── shared/                       # Shared utilities
+│   │   └── DirectusImage.tsx         # Renders images from Directus
+│   ├── ui/                           # Shadcn and other base UI components
+│   │   └── ...
+├── lib/                              # Utility and global logic
+│   ├── directus/                     # Directus utilities
+│   │   ├── directus.ts               # Directus client setup
+│   │   ├── fetchers.ts               # API fetchers
+│   │   ├── forms.ts                  # Directus form handling
+│   │   ├── generateDirectusTypes.ts  # Generates Directus types
+│   │   └── directus-utils.ts         # General Directus helpers
+│   ├── zodSchemaBuilder.ts           # Zod validation schemas
+├── styles/                           # Global styles
+│   └── ...
+├── types/                            # TypeScript types
+│   └── directus-schema.ts            # Directus-generated types
 ```
